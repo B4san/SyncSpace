@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SyncSpace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">SS</div>
+        <div class="brand-text">
+          <strong>SyncSpace</strong>
+          <span class="subtitle">Watch parties sencillas y sincronizadas</span>
+        </div>
+      </div>
+      <nav class="top-actions">
+        <button class="ghost" id="nav-create">Crear sala</button>
+        <button class="primary" id="nav-join">Unirme</button>
+      </nav>
+    </header>
+
+    <main id="app">
+      <section id="landing-view" class="view visible">
+        <div class="hero">
+          <div class="hero-text">
+            <p class="eyebrow">Watch party instantánea</p>
+            <h1>Compartí videos, cámara y chat en un mismo espacio.</h1>
+            <p class="lede">
+              Crea una sala privada y comparte el enlace. Sin registros, con
+              controles sincronizados y soporte para micrófono, cámara y
+              pantalla compartida.
+            </p>
+            <div class="cta-row">
+              <button class="primary" id="hero-create">Crear sala</button>
+              <div class="join-inline">
+                <input
+                  id="landing-code"
+                  type="text"
+                  placeholder="Código de sala"
+                  aria-label="Código de sala"
+                  maxlength="10"
+                />
+                <button class="ghost" id="hero-join">Unirme</button>
+              </div>
+            </div>
+            <ul class="pill-list">
+              <li>Sin registro</li>
+              <li>2 a 10 usuarios</li>
+              <li>Reproducción sincronizada</li>
+              <li>Video llamada integrada</li>
+            </ul>
+          </div>
+          <div class="hero-illustration">
+            <div class="mock-player">
+              <div class="mock-header">
+                <div class="mock-dot red"></div>
+                <div class="mock-dot amber"></div>
+                <div class="mock-dot green"></div>
+              </div>
+              <div class="mock-body">
+                <div class="mock-video"></div>
+                <div class="mock-sidebar">
+                  <div class="mock-line short"></div>
+                  <div class="mock-line"></div>
+                  <div class="mock-line short"></div>
+                  <div class="mock-line"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="join-view" class="view">
+        <div class="card">
+          <h2>Entrar a la sala</h2>
+          <p class="lede">Ingresa tu nombre para continuar.</p>
+          <form id="join-form" class="stack">
+            <label class="input-label" for="user-name">Nombre</label>
+            <input
+              id="user-name"
+              name="user-name"
+              type="text"
+              minlength="3"
+              required
+              placeholder="Ej. Ana"
+            />
+            <label class="input-label" for="room-code">Código de sala</label>
+            <div class="input-with-action">
+              <input
+                id="room-code"
+                name="room-code"
+                type="text"
+                maxlength="10"
+                required
+              />
+              <button class="ghost" type="button" id="prefill-code">
+                Usar último
+              </button>
+            </div>
+            <div class="toggle">
+              <input type="checkbox" id="join-as-host" />
+              <label for="join-as-host">Entrar como host</label>
+            </div>
+            <button class="primary" type="submit">Entrar</button>
+            <p class="helper" id="join-error" role="alert"></p>
+          </form>
+        </div>
+      </section>
+
+      <section id="room-view" class="view">
+        <div class="room-shell">
+          <aside class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Código de sala</p>
+                <h3 id="room-code-display">—</h3>
+              </div>
+              <button class="ghost small" id="copy-link">Copiar enlace</button>
+            </div>
+            <div class="panel-section">
+              <div class="section-title">Participantes</div>
+              <ul id="participant-list" class="list"></ul>
+            </div>
+            <div class="panel-section">
+              <div class="section-title">Indicadores</div>
+              <ul id="indicator-feed" class="list indicators"></ul>
+            </div>
+            <div class="panel-section">
+              <button class="ghost full" id="open-settings">Configuración</button>
+              <button class="ghost full" id="leave-room">Salir</button>
+            </div>
+          </aside>
+
+          <section class="workspace" id="workspace">
+            <div class="media-area">
+              <div class="media-header">
+                <div>
+                  <p class="eyebrow">Reproductor sincronizado</p>
+                  <h3 id="media-title">Demo de reproducción</h3>
+                </div>
+                <div class="chip" id="control-mode">Control compartido</div>
+              </div>
+              <div class="media-body">
+                <video
+                  id="media-player"
+                  src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+                  controls
+                  playsinline
+                ></video>
+                <div class="media-controls">
+                  <button class="ghost" id="toggle-play">Play/Pause</button>
+                  <label class="range">
+                    <span>Progreso</span>
+                    <input type="range" id="seek-bar" min="0" max="100" value="0" />
+                  </label>
+                  <div class="load-control">
+                    <input
+                      type="url"
+                      id="video-url"
+                      placeholder="URL de video"
+                      aria-label="URL de video"
+                    />
+                    <button class="ghost" id="load-video">Cargar</button>
+                  </div>
+                  <button class="ghost" id="start-screenshare">Compartir pantalla</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="lower-grid">
+              <div class="camera-grid">
+                <div class="section-title">Cámaras</div>
+                <div id="camera-grid" class="camera-cards"></div>
+              </div>
+              <div class="chat-panel">
+                <div class="section-title">Chat</div>
+                <div id="chat-feed" class="chat-feed"></div>
+                <form id="chat-form" class="chat-form">
+                  <input
+                    type="text"
+                    id="chat-input"
+                    placeholder="Escribe un mensaje"
+                    autocomplete="off"
+                  />
+                  <button class="primary" type="submit">Enviar</button>
+                </form>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal" id="settings-modal" aria-hidden="true" role="dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Configuración de sala</h3>
+          <button class="ghost" id="close-settings">Cerrar</button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-group">
+            <p class="section-title">Fondo de sala</p>
+            <div class="background-options">
+              <button class="chip" data-bg="none">Sólido</button>
+              <button class="chip" data-bg="gradient">Gradiente</button>
+              <button class="chip" data-bg="dots">Textura</button>
+              <button class="chip" data-bg="custom">URL personalizada</button>
+            </div>
+            <input
+              type="url"
+              id="custom-bg-url"
+              placeholder="https://ejemplo.com/fondo.jpg"
+              aria-label="URL de fondo"
+            />
+          </div>
+          <div class="setting-group">
+            <p class="section-title">Permisos</p>
+            <label class="toggle">
+              <input type="checkbox" id="host-only-controls" />
+              <span>Solo host controla reproducción</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <template id="participant-template">
+      <li>
+        <div class="avatar"></div>
+        <div class="participant-meta">
+          <div class="name"></div>
+          <div class="status"></div>
+        </div>
+        <div class="badges"></div>
+      </li>
+    </template>
+
+    <template id="camera-card-template">
+      <div class="camera-card">
+        <div class="camera-video muted"></div>
+        <div class="camera-meta">
+          <div class="name"></div>
+          <div class="state"></div>
+        </div>
+        <div class="camera-actions">
+          <button class="ghost small mic-toggle">Mic</button>
+          <button class="ghost small cam-toggle">Cam</button>
+        </div>
+      </div>
+    </template>
+
+    <script src="assets/js/app.js" type="module"></script>
+  </body>
+</html>
